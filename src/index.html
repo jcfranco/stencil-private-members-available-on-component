@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Title</title>
+  <script type="module" src="/build/test-stencil-components.esm.js"></script>
+  <link href='/build/test-stencil-components.css' rel='stylesheet'>
+</head>
+<body>
+  <h3>👁️👄👁️👇 look at console (expecting error)</h3>
+  <my-component></my-component>
+  <script>
+    (async () => {
+      await customElements.whenDefined('my-component');
+      const myComponent = document.querySelector('my-component');
+      await myComponent.componentOnReady();
+
+      myComponent._clickOnlyMethod(); // private method should not be available on the component instance (✅ on `dist` output target)
+    })();
+  </script>
+</body>
+</html>
